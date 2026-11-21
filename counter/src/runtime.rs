@@ -1,7 +1,7 @@
 use crate::display::Display;
 use core::cell::Cell;
 use cortex_m::delay::Delay;
-use critical_section::Mutex;
+use critical_section::{Mutex};
 use rp2040_flash::flash::{flash_range_erase, flash_range_program};
 
 const XIP_BASE: usize = 0x10000000;
@@ -23,6 +23,15 @@ pub fn read_record(i: usize) -> Option<u32> {
         let check = core::ptr::read_volatile(p.add(2));
         (flag == PI_FLAG_VALUE && check == !value).then_some(value)
     }
+}
+
+pub fn reset_counter_in_flash() {
+    critical_section::with(|cs| {
+        GLOBAL_COUNTER.borrow(cs).set(None);
+        unsafe {
+            flash_range_erase(XIP_OFFSET as u32, SECTOR_SIZE as u32, true);
+        }
+    });
 }
 
 pub fn read_counter_from_flash() -> u32 {
