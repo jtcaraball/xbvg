@@ -13,4 +13,5 @@ rp2040-flash.workspace = true
 rp-pico.workspace = true
 
 [features]
+default = ["common-cathode"]
 common-cathode = []

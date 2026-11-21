@@ -56,8 +56,8 @@ impl<const S: usize> Display<S> {
 
 #[cfg(feature = "common-cathode")]
 impl<const S: usize> Display<S> {
-    const DEFAULT_MUX_STATE: PinState = High;
-    const DEFAULT_CHAR_STATE: PinState = Low;
+    pub const DEFAULT_MUX_STATE: PinState = High;
+    pub const DEFAULT_CHAR_STATE: PinState = Low;
 
     #[inline]
     pub fn set_on(&mut self, i: usize) -> Result<(), Error> {
@@ -72,7 +72,7 @@ impl<const S: usize> Display<S> {
     #[inline]
     pub fn draw(&mut self, shape: u8) -> Result<(), Error> {
         let mut buf = shape;
-        for pin in self {
+        for pin in self.char_segment.as_mut_slice() {
             if buf & 0b0000_0001 == 1 {
                 pin.set_high()?;
             } else {
