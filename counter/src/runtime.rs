@@ -137,7 +137,7 @@ pub struct Counter<const S: usize> {
 }
 
 impl<const S: usize> Counter<S> {
-    const MUX_DELAY_MS: u32 = 2u32;
+    const MUX_DELAY_MS: u32 = 1u32;
 
     #[inline]
     pub fn new(freq_ms: u32, display: Display<S>, delay: Delay) -> Counter<S> {
