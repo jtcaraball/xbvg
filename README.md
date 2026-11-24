@@ -13,12 +13,14 @@ point after a power off. To achieve this without obliterating the sbc's memory w
 achieved when a loss of power is detected and whilst the board is running in power stored in
 a capacitor. The power circuit that allows for this is depicted bellow:
 
-![circuit](assets/circuit.png)
+<p align="center">
+<img src="assets/circuit.png" />
+</p>
 
 The line that comes out of the voltage divider is connected to the `GPIO28` pin which is set up as
 pull-down input and on an edge low triggers an interrupt that runs the counter write sequence.
 
-> [!WARN]
+> [!WARNING]
 > Shorting the `GPIO0` pin to ground will reset the counter!
 
 ## Building and flashing firmware
