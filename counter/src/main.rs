@@ -16,10 +16,10 @@ use rp_pico::{
 };
 use rp2040_hal::{
     Clock,
-    gpio::{FunctionSioInput, Interrupt, Pin, PullUp, PullDown, bank0},
+    gpio::{FunctionSioInput, Interrupt, Pin, PullDown, PullUp, bank0},
 };
 
-const DISPLAY_SIZE: usize = 4;
+const DISPLAY_SIZE: usize = 12;
 const FREQUENCY_MS: u32 = 10;
 
 type PowerInterruptPin = Pin<bank0::Gpio28, FunctionSioInput, PullDown>;
@@ -73,8 +73,13 @@ fn main() -> ! {
     let display = display!(
         DISPLAY_SIZE,
         pins,
-        [gpio16, gpio17, gpio18, gpio19],
-        [gpio15, gpio14, gpio13, gpio12, gpio11, gpio10, gpio9, gpio8]
+        [
+            gpio7, gpio6, gpio5, gpio4, gpio11, gpio10, gpio9, gpio8, gpio15, gpio14, gpio13,
+            gpio12
+        ],
+        [
+            gpio16, gpio17, gpio18, gpio19, gpio20, gpio21, gpio22, gpio26
+        ]
     );
 
     let mut counter = Counter::<DISPLAY_SIZE>::new(FREQUENCY_MS, display, delay);
